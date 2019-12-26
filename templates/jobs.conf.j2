@@ -1,0 +1,11 @@
+Job {
+  Name = "{{ item.hostname }}"
+  Type = Backup
+  Level = Full
+  Client = {{ item.hostname }}
+  FileSet= "{{ item.fileset }}"
+  Messages = Standard
+  Storage = {{ item.pool.storage }}
+  Pool = {{ item.hostname }}
+  Schedule = {{ item.schedule }}
+}

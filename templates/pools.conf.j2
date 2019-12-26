@@ -1,0 +1,11 @@
+Pool {
+  Name = {{ item.hostname }}
+  Pool Type = Backup
+  Recycle = yes
+  Auto Prune = yes
+  Volume Retention = {{ item.pool.retention }}
+  Label Format = "{{ item.hostname }}-"
+  Volume Use Duration = {{ item.pool.use_duration }}
+  Recycle Oldest Volume = yes
+  Storage = {{ item.pool.storage }}
+}
