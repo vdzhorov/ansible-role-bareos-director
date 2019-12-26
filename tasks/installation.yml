@@ -1,0 +1,35 @@
+---
+
+- name: Install Bareos packages
+  yum:
+    name: bareos, bareos-database-mysql
+    state: installed
+  register: bareos_initial_installation
+
+- name: Run initial installation scripts
+  command: "{{ item }}"
+  loop:
+    - "/usr/lib/bareos/scripts/create_bareos_database"
+    - "/usr/lib/bareos/scripts/make_bareos_tables"
+    - "/usr/lib/bareos/scripts/grant_bareos_privileges"
+  when: bareos_initial_installation.changed
+
+- name: Enable Bareos firewalld ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - '9101/tcp'
+    - '9103/tcp'
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == '7'
+  # TODO: Fix when conditional via service_facts
+
+- name: Enable Bareos services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - 'bareos-dir'
+    - 'bareos-sd'
+    - 'bareos-fd'
