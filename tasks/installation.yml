@@ -6,12 +6,16 @@
     state: installed
   register: bareos_initial_installation
 
-- name: Run initial installation scripts
-  command: "{{ item }}"
-  loop:
-    - "/usr/lib/bareos/scripts/create_bareos_database"
-    - "/usr/lib/bareos/scripts/make_bareos_tables"
-    - "/usr/lib/bareos/scripts/grant_bareos_privileges"
+- name: Create MySQL database
+  command: '/usr/lib/bareos/scripts/create_bareos_database'
+  when: bareos_initial_installation.changed
+
+- name: Create initial MySQL tables
+  command: "/usr/lib/bareos/scripts/make_bareos_tables"
+  when: bareos_initial_installation.changed
+
+- name: Grant MySQL user privileges
+  command: "/usr/lib/bareos/scripts/grant_bareos_privileges"
   when: bareos_initial_installation.changed
 
 - name: Enable Bareos firewalld ports
