@@ -18,6 +18,7 @@
   notify:
     - "Reload bareos-dir"
     - "Restart bareos-fd"
+  loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
 - name: Configure schedules in /etc/bareos/bareos-dir.d/schedule/*.conf (Director)
