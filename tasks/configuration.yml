@@ -1,0 +1,60 @@
+---
+
+- name: Configure storage locations in /etc/bareos/bareos-dir.d/storage/*.conf (Director)
+  template:
+    src: "storage.conf.j2"
+    dest: "/etc/bareos/bareos-dir.d/storage/{{ item.name }}.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  loop: "{{ storages }}"
+  notify: Restart bareos-dir
+  tags: [bareos-dir]
+
+- name: Configure clients in /etc/bareos/bareos-dir.d/client/*.conf (Director)
+  template:
+    src: "client.conf.j2"
+    dest: "/etc/bareos/bareos-dir.d/client/{{ item.hostname }}.conf"
+  notify:
+    - "Reload bareos-dir"
+    - "Restart bareos-fd"
+  tags: [bareos-client, bareos-dir]
+
+- name: Configure schedules in /etc/bareos/bareos-dir.d/schedule/*.conf (Director)
+  template:
+    src: "schedule.yml.j2"
+    dest: "/etc/bareos/bareos-dir.d/schedule/{{ item.name }}.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  loop: "{{ bareos_schedules }}"
+  notify:
+    - "Restart bareos-dir"
+    - "Restart bareos-fd"
+  tags: [bareos-schedules]
+
+- name: Configure pools in /etc/bareos/bareos-dir.d/pool/*.conf (Director)
+  template:
+    src: "pools.conf.j2"
+    dest: "/etc/bareos/bareos-dir.d/pool/{{ item.hostname }}.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  notify:
+    - "Restart bareos-fd"
+    - "Restart bareos-dir"
+  loop: "{{ bareos_clients }}"
+  tags: [bareos-client, bareos-dir]
+
+- name: Configure client jobs in /etc/bareos/bareos-dir.d/job/*.conf (Director)
+  template:
+    src: "jobs.conf.j2"
+    dest: "/etc/bareos/bareos-dir.d/job/{{ item.hostname }}.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  notify:
+    - "Restart bareos-fd"
+    - "Restart bareos-dir"
+  loop: "{{ bareos_clients }}"
+  tags: [bareos-client, bareos-dir]
