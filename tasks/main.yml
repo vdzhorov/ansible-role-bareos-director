@@ -1,0 +1,5 @@
+---
+
+# Director installation and configuration
+- include: installation.yml
+- include: configuration.yml
