@@ -1,0 +1,21 @@
+FileSet {
+  Name = "{{ item.name }}"
+  {% if item.description is defined %}Description = "Backup all regular filesystems, determined by filesystem type."
+  {% endif %}
+  {% if item.options.include is defined %}Include {
+    Options {
+      {{ item.options.include }}
+    }{% endif %}
+    {% if item.options.backed_up_directories is defined %}{% for backup_dir in item.options.backed_up_directories %}
+    File = {{ backup_dir }}
+    {% endfor %}
+    {% endif %}
+  }
+  # Things that usually have to be excluded
+  # You have to exclude /var/lib/bareos/storage
+  # on your bareos server
+  {% if item.options.exclude is defined %}Exclude {
+    {{ item.options.exclude }}
+  }
+  {% endif %}
+}
