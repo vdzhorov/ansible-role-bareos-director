@@ -11,16 +11,6 @@
   notify: Restart bareos-dir
   tags: [bareos-dir]
 
-- name: Configure clients in {{ bareos_location }}/bareos-dir.d/client/*.conf (Director)
-  template:
-    src: "client.conf.j2"
-    dest: "{{ bareos_location }}/bareos-dir.d/client/{{ item.hostname }}.conf"
-  notify:
-    - "Reload bareos-dir"
-    - "Restart bareos-fd"
-  loop: "{{ bareos_clients }}"
-  tags: [bareos-client, bareos-dir]
-
 - name: Configure schedules in {{ bareos_location }}/bareos-dir.d/schedule/*.conf (Director)
   template:
     src: "schedule.yml.j2"
@@ -44,6 +34,16 @@
   notify:
     - "Restart bareos-fd"
     - "Restart bareos-dir"
+  loop: "{{ bareos_clients }}"
+  tags: [bareos-client, bareos-dir]
+
+- name: Configure clients in {{ bareos_location }}/bareos-dir.d/client/*.conf (Director)
+  template:
+    src: "client.conf.j2"
+    dest: "{{ bareos_location }}/bareos-dir.d/client/{{ item.hostname }}.conf"
+  notify:
+    - "Reload bareos-dir"
+    - "Restart bareos-fd"
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
