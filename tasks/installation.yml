@@ -37,3 +37,12 @@
     - 'bareos-dir'
     - 'bareos-sd'
     - 'bareos-fd'
+
+- name: Download MySQL plugin
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ bareos_plugins_location }}"
+    mode: 0755
+  loop:
+    - "{{ bareos_git_raw }}/fd-plugins/mysql-python/BareosFdMySQLclass.py"
+    - "{{ bareos_git_raw }}/fd-plugins/mysql-python/bareos-fd-mysql.py"
