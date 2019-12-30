@@ -1,7 +1,7 @@
 ---
 
 dependencies:
-  - vdzhorov.ansible-role-bareos-base
+  - vdzhorov.ansible_role_bareos_base
 
 galaxy_info:
   author: vdzhorov
