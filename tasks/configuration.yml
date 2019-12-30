@@ -19,7 +19,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_filesets }}"
-  notify: Restart bareos-dir
+  notify: Reload bareos-dir
   tags: [bareos-dir]
 
 - name: Configure schedules in {{ bareos_location }}/bareos-dir.d/schedule/*.conf (Director)
@@ -31,7 +31,7 @@
     mode: 0640
   loop: "{{ bareos_schedules }}"
   notify:
-    - "Restart bareos-dir"
+    - "Reload bareos-dir"
     - "Restart bareos-fd"
   tags: [bareos-schedules]
 
@@ -43,7 +43,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   notify:
-    - "Restart bareos-fd"
+    - "Reload bareos-fd"
     - "Restart bareos-dir"
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
@@ -66,7 +66,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   notify:
-    - "Restart bareos-fd"
+    - "Reload bareos-fd"
     - "Restart bareos-dir"
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
