@@ -1,0 +1,20 @@
+---
+
+dependencies:
+  - vdzhorov.ansible-role-bareos-base
+
+galaxy_info:
+  author: vdzhorov
+  description: Install and configure Bareos director on a target host
+  company: "Delta.BG"
+  license: "license (MIT)"
+  min_ansible_version: 2.5
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+        - 8
+  galaxy_tags:
+    - linux
+    - bareos
