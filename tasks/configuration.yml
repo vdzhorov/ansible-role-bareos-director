@@ -11,6 +11,17 @@
   notify: Restart bareos-dir
   tags: [bareos-dir]
 
+- name: Configure messages in {{ bareos_location }}/bareos-dir.d/messages/Standard.conf
+  template:
+    src: "messages-standard.conf.j2"
+    dest: "{{ bareos_location }}/bareos-dir.d/messages/Standard.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  loop: "{{ bareos_remote_storage_locations }}"
+  notify: Restart bareos-dir
+  tags: [bareos-dir]
+
 - name: Configure filesets in {{ bareos_location }}/bareos-dir.d/fileset/*.conf (Director)
   template:
     src: "filesets.conf.j2"
