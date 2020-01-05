@@ -33,7 +33,7 @@
   notify:
     - "Reload bareos-dir"
     - "Restart bareos-fd"
-  tags: [bareos-schedules]
+  tags: [bareos-dir]
 
 - name: Configure pools in {{ bareos_location }}/bareos-dir.d/pool/*.conf (Director)
   template:
