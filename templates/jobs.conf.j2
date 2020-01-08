@@ -8,4 +8,5 @@ Job {
   Storage = {{ item.pool.storage }}
   Pool = {{ item.hostname }}
   Schedule = {{ item.schedule }}
+  Priority = {{ item.priority|default(20, true) }}
 }
