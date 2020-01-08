@@ -18,7 +18,6 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  loop: "{{ bareos_remote_storage_locations }}"
   notify: Restart bareos-dir
   tags: [bareos-dir]
 
