@@ -2,7 +2,9 @@ Storage {
   Name = {{ item.name }}
   Address = {{ item.address }}
   Password = "{{ bareos_storage_password }}"
-  Device = FileStorage
+  {% for n in range(1, (bareos_max_concurrent_jobs + 1)) %}Device = FileStorage{{ n }}
+  {% endfor %}
+  Maximum Concurrent Jobs = {{ bareos_max_concurrent_jobs + 2 }}
   Media Type = File
   TLS Enable = No
 }
