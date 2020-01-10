@@ -172,8 +172,8 @@ bareos_filesets:
 bareos_max_concurrent_jobs: 5
 bareos_max_bandwidth_per_job: "50 m/s"
 
-bareos_archive_type: "File"
-bareos_archive_device: "/var/lib/bareos/storage"
+bareos.storage.bareos.storage.bareos_archive_type: "File"
+bareos.storage.bareos_archive_device: "/var/lib/bareos/storage"
 
 ```
 
