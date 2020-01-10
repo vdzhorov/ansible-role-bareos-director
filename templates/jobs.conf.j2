@@ -9,4 +9,8 @@ Job {
   Pool = {{ item.hostname }}
   Schedule = {{ item.schedule }}
   Priority = {{ item.priority|default(20, true) }}
+  Allow Mixed Priority = {{ bareos.jobs.allow_mixed_priority }}
+  Reschedule On Error = {{ bareos.jobs.reschedule_on_error }}
+  Reschedule Interval = {{ bareos.jobs.reschedule_interval }}
+  Reschedule Times = {{ bareos.jobs.reschedule_times }}
 }
