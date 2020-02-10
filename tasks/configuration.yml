@@ -80,3 +80,10 @@
     - "Restart bareos-dir"
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
+
+- name: Configure Maximum Concurrent Jobs in {{ bareos_location }}/bareos-dir.d/director/bareos-dir.conf
+  lineinfile:
+    path: "{{ bareos_location }}/bareos-dir.d/director/bareos-dir.conf"
+    regexp: "Maximum Concurrent Jobs = [1-9].*"
+    line: "Maximum Concurrent Jobs = {{ bareos_max_concurrent_jobs }}"
+  notify: "Restart bareos-dir"
