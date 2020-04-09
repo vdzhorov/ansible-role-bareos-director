@@ -1,14 +1,6 @@
 ---
 
-- name: Restart bareos-dir
+- name: restart bareos-dir
   service:
     name: bareos-dir
-    state: restarted
-
-- name: Reload bareos-dir
-  command: "echo 'reload' | bconsole"
-
-- name: Restart bareos-fd
-  service:
-    name: bareos-fd
     state: restarted

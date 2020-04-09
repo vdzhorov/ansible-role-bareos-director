@@ -8,7 +8,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_remote_storage_locations }}"
-  notify: Restart bareos-dir
+  notify: restart bareos-dir
   tags: [bareos-dir]
 
 - name: Configure messages in {{ bareos_location }}/bareos-dir.d/messages/Standard.conf
@@ -18,7 +18,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify: Restart bareos-dir
+  notify: restart bareos-dir
   tags: [bareos-dir]
 
 - name: Configure filesets in {{ bareos_location }}/bareos-dir.d/fileset/*.conf (Director)
@@ -29,7 +29,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_filesets }}"
-  notify: Reload bareos-dir
+  notify: restart bareos-dir
   tags: [bareos-dir]
 
 - name: Configure schedules in {{ bareos_location }}/bareos-dir.d/schedule/*.conf (Director)
@@ -40,9 +40,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_schedules }}"
-  notify:
-    - "Reload bareos-dir"
-    - "Restart bareos-fd"
+  notify: restart bareos-dir
   tags: [bareos-dir]
 
 - name: Configure pools in {{ bareos_location }}/bareos-dir.d/pool/*.conf (Director)
@@ -52,9 +50,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify:
-    - "Restart bareos-fd"
-    - "Restart bareos-dir"
+  notify: restart bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -62,9 +58,7 @@
   template:
     src: "client.conf.j2"
     dest: "{{ bareos_location }}/bareos-dir.d/client/{{ item.hostname }}.conf"
-  notify:
-    - "Reload bareos-dir"
-    - "Restart bareos-fd"
+  notify: restart bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -75,9 +69,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify:
-    - "Restart bareos-fd"
-    - "Restart bareos-dir"
+  notify: restart bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -86,4 +78,4 @@
     path: "{{ bareos_location }}/bareos-dir.d/director/bareos-dir.conf"
     regexp: "Maximum Concurrent Jobs = [1-9].*"
     line: "Maximum Concurrent Jobs = {{ bareos_max_concurrent_jobs }}"
-  notify: "Restart bareos-dir"
+  notify: restart bareos-dir
