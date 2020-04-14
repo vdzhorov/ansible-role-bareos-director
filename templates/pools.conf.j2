@@ -1,11 +1,11 @@
 Pool {
   Name = {{ item.hostname }}
-  Pool Type = Backup
-  Recycle = yes
-  Auto Prune = yes
+  Pool Type = {{ bareos_pools_type }}
+  Recycle = {{ bareos_pools_recycle }}
+  Auto Prune = {{ bareos_pools_auto_prune }}
   Volume Retention = {{ item.pool.volume_retention }}
   Label Format = "{{ item.hostname }}-"
   Volume Use Duration = {{ item.pool.use_duration }}
-  Recycle Oldest Volume = yes
+  Recycle Oldest Volume = {{ bareos_pools_recycle_oldest_volume }}
   Storage = {{ item.pool.storage }}
 }

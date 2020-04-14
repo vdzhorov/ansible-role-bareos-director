@@ -2,8 +2,8 @@ Client {
   Name = {{ item.hostname }}
   Address = {{ item.address }}
   Password = {{ bareos_clients_password }}
-  TLS Enable = No
-  Auto Prune = Yes
+  TLS Enable = {{ bareos_clients_tls_enable }}
+  Auto Prune = {{ bareos_clients_auto_prune }}
   File Retention = {{ item.pool.retention }}
   Job Retention = {{ item.pool.retention }}
 }
