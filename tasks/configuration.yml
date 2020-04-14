@@ -11,6 +11,16 @@
   notify: restart bareos-dir
   tags: [bareos-dir]
 
+- name: Configure {{ bareos_root_dir }}/bareos-sd.d/director/bareos-dir.conf (Director)
+  template:
+    src: "bareos-dir.conf.j2"
+    dest: "{{ bareos_root_dir }}/bareos-sd.d/director/bareos-dir.conf"
+    owner: "{{ bareos_owner }}"
+    group: "{{ bareos_group }}"
+    mode: 0640
+  notify: Restart bareos-sd
+  tags: [bareos-storage]
+
 - name: Configure messages in {{ bareos_root_dir }}/bareos-dir.d/messages/Standard.conf
   template:
     src: "messages-standard.conf.j2"
