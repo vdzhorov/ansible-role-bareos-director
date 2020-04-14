@@ -12,6 +12,11 @@ FileSet {
     {% endif %}
     {% endfor %}
     {% endif %}
+
+    {% if item.options.exclude_dir_containing is defined %}{% for exclude_dir in item.options.exclude_dir_containing %}Exclude Dir Containing = {{ exclude_dir }}
+    {% endfor %}
+    {% endif %}
+
   }
   # Things that usually have to be excluded
   # You have to exclude /var/lib/bareos/storage
