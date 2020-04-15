@@ -87,7 +87,7 @@
   lineinfile:
     path: "{{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf"
     regexp: "Maximum Concurrent Jobs = [1-9].*"
-    line: "Maximum Concurrent Jobs = {{ bareos_max_concurrent_jobs }}"
+    line: "Maximum Concurrent Jobs = {{ bareos_storage_max_concurrent_jobs }}"
   notify: restart bareos-dir
 
 - name: Ensure Bareos services are started
