@@ -11,7 +11,7 @@
   notify: reload bareos-dir
   tags: [bareos-dir]
 
-- name: Configure {{ bareos_root_dir }}/bareos-sd.d/director/bareos-dir.conf (Director)
+- name: Configure local {{ bareos_root_dir }}/bareos-sd.d/director/bareos-dir.conf (Director)
   template:
     src: "bareos-dir.conf.j2"
     dest: "{{ bareos_root_dir }}/bareos-sd.d/director/bareos-dir.conf"
@@ -28,7 +28,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   tags: [bareos-dir]
 
 - name: Configure filesets in {{ bareos_root_dir }}/bareos-dir.d/fileset/*.conf (Director)
@@ -39,7 +39,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_filesets }}"
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   tags: [bareos-dir]
 
 - name: Configure schedules in {{ bareos_root_dir }}/bareos-dir.d/schedule/*.conf (Director)
@@ -60,7 +60,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -68,7 +68,7 @@
   template:
     src: "client.conf.j2"
     dest: "{{ bareos_root_dir }}/bareos-dir.d/client/{{ item.hostname }}.conf"
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -79,7 +79,7 @@
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   loop: "{{ bareos_clients }}"
   tags: [bareos-client, bareos-dir]
 
@@ -88,7 +88,7 @@
     path: "{{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf"
     regexp: "Maximum Concurrent Jobs = [1-9].*"
     line: "Maximum Concurrent Jobs = {{ bareos_storage_max_concurrent_jobs }}"
-  notify: restart bareos-dir
+  notify: reload bareos-dir
 
 - name: Ensure Bareos services are started
   service:
