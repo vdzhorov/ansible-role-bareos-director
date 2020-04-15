@@ -4,3 +4,6 @@
   service:
     name: bareos-dir
     state: restarted
+
+- name: reload bareos-dir
+  shell: "echo reload | bconsole"
