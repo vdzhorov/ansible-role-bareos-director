@@ -1,11 +1,11 @@
 Pool {
-  Name = {{ item.hostname }}
-  Pool Type = {{ bareos_pools_type }}
-  Recycle = {{ bareos_pools_recycle }}
-  Auto Prune = {{ bareos_pools_auto_prune }}
-  Volume Retention = {{ item.pool.volume_retention }}
-  Label Format = "{{ item.hostname }}-"
-  Volume Use Duration = {{ item.pool.use_duration }}
-  Recycle Oldest Volume = {{ bareos_pools_recycle_oldest_volume }}
-  Storage = {{ item.pool.storage }}
+  Name = {{ hostvars[item]['client_hostname'] }}
+  Pool Type = {{ hostvars[item]['client_pool_type'] }}
+  Recycle = {{ hostvars[item]['client_pool_recycle'] }}
+  Auto Prune = {{ hostvars[item]['client_pool_auto_prune'] }}
+  Volume Retention = {{ hostvars[item]['client_pool_volume_retention'] }}
+  Label Format = "{{ hostvars[item]['client_hostname'] }}-"
+  Volume Use Duration = {{ hostvars[item]['client_pool_use_duration'] }}
+  Recycle Oldest Volume = {{ hostvars[item]['client_pool_recycle_oldest_volume'] }}
+  Storage = {{ hostvars[item]['client_remote_storage'] }}
 }

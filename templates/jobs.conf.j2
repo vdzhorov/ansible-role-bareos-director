@@ -1,14 +1,14 @@
 Job {
-  Name = "{{ item.hostname }}"
-  Type = Backup
+  Name = {{ hostvars[item]['client_hostname'] }}
+  Type = {{ hostvars[item]['client_pool_type'] }}
   Level = Full
-  Client = {{ item.hostname }}
-  FileSet= "{{ item.fileset }}"
+  Client = {{ hostvars[item]['client_hostname'] }}
+  FileSet= {{ hostvars[item]['client_fileset'] }}
   Messages = Standard
-  Storage = {{ item.pool.storage }}
-  Pool = {{ item.hostname }}
-  Schedule = {{ item.schedule }}
-  Priority = {{ item.priority|default(20, true) }}
+  Storage = {{ hostvars[item]['client_remote_storage'] }}
+  Pool = {{ hostvars[item]['client_hostname'] }}
+  Schedule = {{ hostvars[item]['client_schedule'] }}
+  Priority = {{ hostvars[item]['client_priority']|default(20, true) }}
   Allow Mixed Priority = {{ bareos_jobs_allow_mixed_priority }}
   Reschedule On Error = {{ bareos_jobs_reschedule_on_error }}
   Reschedule Interval = {{ bareos_jobs_reschedule_interval }}

@@ -53,35 +53,35 @@
   notify: reload bareos-dir
   tags: [bareos-dir]
 
-- name: Configure pools in {{ bareos_root_dir }}/bareos-dir.d/pool/*.conf (Director)
+- name: Configure client pools in {{ bareos_root_dir }}/bareos-dir.d/pool/*.conf (Director)
   template:
     src: "pools.conf.j2"
-    dest: "{{ bareos_root_dir }}/bareos-dir.d/pool/{{ item.hostname }}.conf"
+    dest: "{{ bareos_root_dir }}/bareos-dir.d/pool/{{ item }}.conf"
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
   notify: reload bareos-dir
-  loop: "{{ bareos_clients }}"
-  tags: [add-bareos-client, bareos-dir]
+  loop: "{{ groups[bareos_clients_group] }}"
+  tags: [add-bareos-client, bareos-dir, debug_1]
 
 - name: Configure clients in {{ bareos_root_dir }}/bareos-dir.d/client/*.conf (Director)
   template:
     src: "client.conf.j2"
-    dest: "{{ bareos_root_dir }}/bareos-dir.d/client/{{ item.hostname }}.conf"
+    dest: "{{ bareos_root_dir }}/bareos-dir.d/client/{{ item }}.conf"
   notify: reload bareos-dir
-  loop: "{{ bareos_clients }}"
-  tags: [add-bareos-client, bareos-dir]
+  loop: "{{ groups[bareos_clients_group] }}"
+  tags: [add-bareos-client, bareos-dir, debug_2]
 
 - name: Configure client jobs in {{ bareos_root_dir }}/bareos-dir.d/job/*.conf (Director)
   template:
     src: "jobs.conf.j2"
-    dest: "{{ bareos_root_dir }}/bareos-dir.d/job/{{ item.hostname }}.conf"
+    dest: "{{ bareos_root_dir }}/bareos-dir.d/job/{{ item }}.conf"
     owner: "{{ bareos_owner }}"
     group: "{{ bareos_group }}"
     mode: 0640
   notify: reload bareos-dir
-  loop: "{{ bareos_clients }}"
-  tags: [add-bareos-client, bareos-dir]
+  loop: "{{ groups[bareos_clients_group] }}"
+  tags: [add-bareos-client, bareos-dir, debug_3]
 
 - name: Configure Maximum Concurrent Jobs in {{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf
   lineinfile:
