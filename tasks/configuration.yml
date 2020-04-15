@@ -50,7 +50,7 @@
     group: "{{ bareos_group }}"
     mode: 0640
   loop: "{{ bareos_schedules }}"
-  notify: restart bareos-dir
+  notify: reload bareos-dir
   tags: [bareos-dir]
 
 - name: Configure pools in {{ bareos_root_dir }}/bareos-dir.d/pool/*.conf (Director)
