@@ -89,3 +89,12 @@
     regexp: "Maximum Concurrent Jobs = [1-9].*"
     line: "Maximum Concurrent Jobs = {{ bareos_max_concurrent_jobs }}"
   notify: restart bareos-dir
+
+- name: Ensure Bareos services are started
+  service:
+    name: "{{ item }}"
+    state: started
+  loop:
+    - bareos-dir
+    - bareos-sd
+    - bareos-fd
