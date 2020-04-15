@@ -62,7 +62,7 @@
     mode: 0640
   notify: reload bareos-dir
   loop: "{{ groups[bareos_clients_group] }}"
-  tags: [add-bareos-client, bareos-dir, debug_1]
+  tags: [add-bareos-client, bareos-dir]
 
 - name: Configure clients in {{ bareos_root_dir }}/bareos-dir.d/client/*.conf (Director)
   template:
@@ -70,7 +70,7 @@
     dest: "{{ bareos_root_dir }}/bareos-dir.d/client/{{ item }}.conf"
   notify: reload bareos-dir
   loop: "{{ groups[bareos_clients_group] }}"
-  tags: [add-bareos-client, bareos-dir, debug_2]
+  tags: [add-bareos-client, bareos-dir]
 
 - name: Configure client jobs in {{ bareos_root_dir }}/bareos-dir.d/job/*.conf (Director)
   template:
@@ -81,7 +81,7 @@
     mode: 0640
   notify: reload bareos-dir
   loop: "{{ groups[bareos_clients_group] }}"
-  tags: [add-bareos-client, bareos-dir, debug_3]
+  tags: [add-bareos-client, bareos-dir]
 
 - name: Configure Maximum Concurrent Jobs in {{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf
   lineinfile:
