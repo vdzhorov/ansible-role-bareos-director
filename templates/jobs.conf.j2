@@ -14,7 +14,7 @@ Job {
   Reschedule Interval = {{ bareos_jobs_reschedule_interval }}
   Reschedule Times = {{ bareos_jobs_reschedule_times }}
   Run Script {
-    Console = ".bvfs_update"
+    Console = ".bvfs_update jobid=%i"
     RunsWhen = After
     RunsOnClient = No
   }
