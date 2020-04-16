@@ -13,4 +13,9 @@ Job {
   Reschedule On Error = {{ bareos_jobs_reschedule_on_error }}
   Reschedule Interval = {{ bareos_jobs_reschedule_interval }}
   Reschedule Times = {{ bareos_jobs_reschedule_times }}
+  Run Script {
+    Console = ".bvfs_update"
+    RunsWhen = After
+    RunsOnClient = No
+  }
 }
