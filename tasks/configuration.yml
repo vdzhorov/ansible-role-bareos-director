@@ -83,12 +83,31 @@
   loop: "{{ groups[bareos_clients_group] }}"
   tags: [add-bareos-client, bareos-dir]
 
-- name: Configure Maximum Concurrent Jobs in {{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf
+- name: Configure Maximum Concurrent Jobs in {{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf (Director)
   lineinfile:
     path: "{{ bareos_root_dir }}/bareos-dir.d/director/bareos-dir.conf"
     regexp: "Maximum Concurrent Jobs = [1-9].*"
     line: "Maximum Concurrent Jobs = {{ bareos_storage_max_concurrent_jobs }}"
   notify: reload bareos-dir
+  tags: [bareos-dir]
+
+- name: Configure user ACL profiles in {{ bareos_root_dir }}/bareos-dir.d/profile/ (Director)
+  template:
+    src: acl-profiles.conf.j2
+    dest: "{{ bareos_root_dir }}/bareos-dir.d/profile/{{ item }}.conf"
+  loop: "{{ groups[bareos_clients_group] }}"
+  when: "hostvars[item]['client_acl_allow_hosts'] is defined"
+  notify: reload bareos-dir
+  tags: [add-bareos-client, bareos-dir, bareos-acl]
+
+- name: Configure users for accessing WebUI in {{ bareos_root_dir }}/bareos-dir.d/console/ (Director)
+  template:
+    src: acl-users.conf.j2
+    dest: "{{ bareos_root_dir }}/bareos-dir.d/console/{{ item }}.conf"
+  loop: "{{ groups[bareos_clients_group] }}"
+  when: "hostvars[item]['client_acl_allow_hosts'] is defined"
+  notify: reload bareos-dir
+  tags: [add-bareos-client, bareos-dir, bareos-acl]
 
 - name: Ensure Bareos services are started
   service:
@@ -98,3 +117,4 @@
     - bareos-dir
     - bareos-sd
     - bareos-fd
+  tags: [bareos-dir]
