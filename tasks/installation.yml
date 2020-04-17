@@ -2,20 +2,27 @@
 
 - name: Install Bareos packages
   yum:
-    name: bareos, bareos-database-mysql
+    name: bareos, bareos-database-postgresql
     state: installed
   register: bareos_initial_installation
 
 - name: Create MySQL database
-  command: '/usr/lib/bareos/scripts/create_bareos_database'
+  shell: su -c '/usr/lib/bareos/scripts/create_bareos_database postgresql' postgres
   when: bareos_initial_installation.changed
 
 - name: Create initial MySQL tables
-  command: "/usr/lib/bareos/scripts/make_bareos_tables"
+  shell: su -c '/usr/lib/bareos/scripts/make_bareos_tables postgresql' postgres
   when: bareos_initial_installation.changed
 
 - name: Grant MySQL user privileges
-  command: "/usr/lib/bareos/scripts/grant_bareos_privileges"
+  shell: su -c '/usr/lib/bareos/scripts/grant_bareos_privileges postgresql' postgres
+  when: bareos_initial_installation.changed
+
+- name: Change database type to PostgreSQL for catalog resource
+  lineinfile:
+    path: "{{ bareos_root_dir }}/bareos-dir.d/catalog/MyCatalog.conf"
+    regexp: "dbdriver = .*"
+    line: "dbdriver = postgresql"
   when: bareos_initial_installation.changed
 
 - name: Enable Bareos services
