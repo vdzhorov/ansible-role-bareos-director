@@ -7,15 +7,15 @@
   register: bareos_initial_installation
 
 - name: Create MySQL database
-  shell: su -c '/usr/lib/bareos/scripts/create_bareos_database postgresql' postgres
+  shell: su - postgres -c '/usr/lib/bareos/scripts/create_bareos_database postgresql'
   when: bareos_initial_installation.changed
 
 - name: Create initial MySQL tables
-  shell: su -c '/usr/lib/bareos/scripts/make_bareos_tables postgresql' postgres
+  shell: su - postgres -c '/usr/lib/bareos/scripts/make_bareos_tables postgresql'
   when: bareos_initial_installation.changed
 
 - name: Grant MySQL user privileges
-  shell: su -c '/usr/lib/bareos/scripts/grant_bareos_privileges postgresql' postgres
+  shell: su - postgres -c '/usr/lib/bareos/scripts/grant_bareos_privileges postgresql'
   when: bareos_initial_installation.changed
 
 - name: Change database type to PostgreSQL for catalog resource
