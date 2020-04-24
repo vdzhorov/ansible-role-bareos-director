@@ -7,5 +7,7 @@ Pool {
   Label Format = "{{ hostvars[item]['client_hostname'] }}-"
   Volume Use Duration = {{ hostvars[item]['client_pool_use_duration'] }}
   Recycle Oldest Volume = {{ hostvars[item]['client_pool_recycle_oldest_volume'] }}
+  Action On Purge = {{ hostvars[item]['client_pool_action_on_purge'] }}
   Storage = {{ hostvars[item]['client_remote_storage'] }}
+  Maximum Volumes = {{ hostvars[item]['client_pool_max_volumes'] }}
 }
