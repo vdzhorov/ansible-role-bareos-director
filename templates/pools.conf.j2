@@ -4,6 +4,8 @@ Pool {
   Recycle = {{ hostvars[item]['client_pool_recycle'] }}
   Auto Prune = {{ hostvars[item]['client_pool_auto_prune'] }}
   Volume Retention = {{ hostvars[item]['client_pool_volume_retention'] }}
+  File Retention = {{ hostvars[item]['client_pool_file_retention'] }}
+  Job Retention = {{ hostvars[item]['client_pool_job_retention'] }}
   Label Format = "{{ hostvars[item]['client_hostname'] }}-"
   Volume Use Duration = {{ hostvars[item]['client_pool_use_duration'] }}
   Recycle Oldest Volume = {{ hostvars[item]['client_pool_recycle_oldest_volume'] }}

@@ -4,6 +4,4 @@ Client {
   Password = {{ bareos_clients_password }}
   TLS Enable = {{ hostvars[item]['client_tls_enable'] }}
   Auto Prune = {{ hostvars[item]['client_auto_prune'] }}
-  File Retention = {{ hostvars[item]['client_pool_retention'] }}
-  Job Retention = {{ hostvars[item]['client_pool_retention'] }}
 }
