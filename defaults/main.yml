@@ -2,4 +2,4 @@
 
 bareos_root_dir: "/etc/bareos"
 bareos_plugins_location: "/usr/lib64/bareos/plugins"
-bareos_git_raw: "https://raw.githubusercontent.com/bareos/bareos-contrib/master/"
+bareos_git_raw: "https://raw.githubusercontent.com/bareos/bareos/master/contrib/"
