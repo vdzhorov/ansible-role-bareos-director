@@ -11,7 +11,7 @@ Profile {
   Job ACL = {{ acl_jobs }}
   {% endif %}
 
-  {% if acl_schedules|length %}
+  {% if acl_schedules|length and hostvars[item]['client_schedule'] is defined %}
   # Define access to the following schedule resources
   Schedule ACL = {{ acl_schedules }}
   {% endif %}

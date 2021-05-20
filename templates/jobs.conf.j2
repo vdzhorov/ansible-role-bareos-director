@@ -7,7 +7,8 @@ Job {
   Messages = Standard
   Storage = {{ hostvars[item]['client_remote_storage'] }}
   Pool = {{ hostvars[item]['client_hostname'] }}
-  Schedule = {{ hostvars[item]['client_schedule'] }}
+  {% if hostvars[item]['client_schedule'] is defined %}Schedule = {{ hostvars[item]['client_schedule'] }}
+  {% endif %}
   Priority = {{ hostvars[item]['client_priority']|default(20, true) }}
   Allow Mixed Priority = {{ bareos_jobs_allow_mixed_priority }}
   Reschedule On Error = {{ bareos_jobs_reschedule_on_error }}
