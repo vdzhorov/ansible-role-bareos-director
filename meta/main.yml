@@ -1,7 +1,6 @@
 ---
 
-dependencies:
-  - vdzhorov.bareos_base
+dependencies: []
 
 galaxy_info:
   role_name: bareos_director
