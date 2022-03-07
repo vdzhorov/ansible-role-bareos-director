@@ -10,10 +10,10 @@ Job {
   {% if hostvars[item]['client_schedule'] is defined %}Schedule = {{ hostvars[item]['client_schedule'] }}
   {% endif %}
   Priority = {{ hostvars[item]['client_priority']|default(20, true) }}
-  Allow Mixed Priority = {{ bareos_jobs_allow_mixed_priority }}
-  Reschedule On Error = {{ bareos_jobs_reschedule_on_error }}
-  Reschedule Interval = {{ bareos_jobs_reschedule_interval }}
-  Reschedule Times = {{ bareos_jobs_reschedule_times }}
+  Allow Mixed Priority = {{ bareos_jobs_allow_mixed_priority|default('yes') }}
+  Reschedule On Error = {{ bareos_jobs_reschedule_on_error|default('yes') }}
+  Reschedule Interval = {{ bareos_jobs_reschedule_interval|default(180) }}
+  Reschedule Times = {{ bareos_jobs_reschedule_times|default(2) }}
   Max Wait Time = {{ bareos_jobs_max_wait_time|default('1 hour') }}
   Run Script {
     Console = ".bvfs_update jobid=%i"
