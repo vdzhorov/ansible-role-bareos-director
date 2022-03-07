@@ -14,6 +14,7 @@ Job {
   Reschedule On Error = {{ bareos_jobs_reschedule_on_error }}
   Reschedule Interval = {{ bareos_jobs_reschedule_interval }}
   Reschedule Times = {{ bareos_jobs_reschedule_times }}
+  Max Wait Time = {{ bareos_jobs_max_wait_time|default('1 hour') }}
   Run Script {
     Console = ".bvfs_update jobid=%i"
     RunsWhen = After
